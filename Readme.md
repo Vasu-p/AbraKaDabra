@@ -1,5 +1,4 @@
-
-#Backend Technology :: 
+## Backend Technologies
 	Node JS
 	Mongo DB
 
@@ -25,7 +24,7 @@ then u can assess the app at
 
 	localhost:3000
 
-... Front End Techs ::
+## Front End Technologies
 
 	Angular JS
 	J Query
