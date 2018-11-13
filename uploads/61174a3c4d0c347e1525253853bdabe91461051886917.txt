@@ -1,0 +1,86 @@
+
+
+
+5906442
+
+
+
+cmu app link
+https://www.ece.cmu.edu/programs-admissions/bachelors/summer-uro/application.html
+
+
+http://www.amazon.in/Crucial-BX100-250GB-Internal-Solid/dp/B00RQA6TEI/ref=cm_cr_arp_d_product_top?ie=UTF8
+
+http://www.amazon.in/Crucial-PC3-12800-SODIMM-204-Pin-Memory/dp/B008LTBJFW/ref=sr_1_3?ie=UTF8&qid=1457104868&sr=8-3&keywords=crucial+ram+for+mac
+
+http://isc.tsu.ru/virtual/WebGoat-5.4/tomcat/webapps/WebGoat/
+
+amazon — refer and earn from vasdudevp_24@yahoo.in to ladenbinladen24@gmail.com
+9687260227 to 9429089979
+
+ladenbinladen24@gmail.com 1029qpwo
+
+
+
+
+
+
+
+Write a c-program for simulation of  Shortest Remaining Time First (SRTF) CPU scheduler.
+
+Program should maintain Ready_Q using process pointers. Each Process should have cpu_time and arrival_time . Cpu_time and arrival_time should be generated randomly. Demonstrate processes context switch according to SRTF Scheduling.
+
+Struct process
+
+{
+
+Int pid;
+
+Int cpu_time;
+
+Int arrival_time;
+
+Struct process * next;
+
+}
+
+ 
+
+Void main()
+
+{
+
+Initialize
+
+/*
+
+Generate n no of process.
+
+Assign process_id serially to each process.
+
+Randomly generate cpu_time and arrival_time for each process.
+
+Create & initialize Ready_Q with n no of processes.
+
+ 
+
+   */
+
+Untill Ready_Q <> empy
+
+{
+
+select Queue Ready_Q
+
+Randomly generate current_time requirement out of total_time requirement for corresponding process present on the front of corresponding queue.
+
+Call delay for current_time no of times.
+
+Subtract current_time from total_cpu_time & update total_cpu_time
+
+Shift process to another queue.
+
+displyQueue.
+
+}
+

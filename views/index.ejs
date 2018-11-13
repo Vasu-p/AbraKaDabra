@@ -1,0 +1,202 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<link type="text/css" rel="stylesheet" href="/public/stylesheets/materialize.min.css"  media="screen,projection"/>
+		<script src="/public/javascripts/jquery.js"></script>
+        <script src="/public/javascripts/angular.js"></script>
+        
+        <script src="/public/javascripts/materialize.js"></script>
+        <link href="/public/iconfont/material-icons.css" rel="stylesheet">
+        <script src="../public/javascripts/app.js"></script> 
+        
+	</head>
+	<body ng-app="searchApp">
+		<style>
+			.navbar-fixed{
+				margin-bottom:50px;
+			}
+            .error{
+                font-size: 20px;
+                color: lightcoral;
+                
+            }
+            .card-content p.author{
+                height:3em;
+                
+            }
+            .card-content h5.author{
+                 height:2em;
+            }
+            .card-content i{
+                position: relative;
+                margin-right: 7px;
+                top: 7px;
+            }
+            .card-content a{
+                cursor: pointer;
+            }
+            .card-action{
+                
+                cursor: pointer;
+            }
+            .beforeanim{
+                
+                margin-top: 250px;
+            }
+            .animation{
+                margin-top:20px;
+                -webkit-transition: margin-top 2s;
+                -moz-transition: margin-top 2s;
+                transition: margin-top 2s;
+            }
+            
+			
+		</style>
+
+    <div ng-controller="homeCtrl" id="homeCtrl">        
+	<div class="navbar-fixed">
+		<nav>
+			<div class="nav-wrapper z-depth-2 red lighten-2">
+				<div class="container">
+					<div class="col s12 m12 l12 navi">
+						<a href="#" class="brand-logo center">Abra Ka Dabra</a>
+						
+					</div>
+				</div>
+			</div>
+		</nav>
+	</div>
+
+
+
+	
+    <div class="container">
+        <div class="row beforeanim" id="mainbar">
+            <div class="col l4 offset-l4">
+                <img src="/public/images/logobulb.png" style="height:200px;">
+                
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col l6 offset-l1 s12">
+                    <nav>
+                    <div class="nav-wrapper">
+                    <form>
+                        <div class="input-field">
+                        <input id="search" type="search" ng-model="searchterm">
+                        <label for="search"><i class="material-icons">search</i></label>
+                        <i class="material-icons">close</i>
+                        </div>
+                    </form>
+                    </div>
+                </nav>
+                
+            </div>
+            <div class="input-field col l4 s12">
+                <select ng-model="sort">
+                <option value="" disabled selected>Choose your option</option>
+                <option value="docName">Name</option>
+                <option value="docAuthor">Author</option>
+                <option value="-docLikes">Likes</option>
+                <option value="-docDownloads">Downloads</option>
+                </select>
+                <label>Order By</label>
+            </div>
+            
+        </div>
+   <div class="row">
+       <form>
+            <div class="col l8 offset-l2 m10 offset-m1 s12">
+                <div class="input-field col l4 m4 s3">
+                    <input type="checkbox" id="name" ng-model="byName"/>
+                    <label for="name">By Name</label>      
+                        
+                </div>
+                
+                <div class="input-field col l4 m4 s4">
+                    <input type="checkbox" id="author" ng-model="byAuthor"/>
+                    <label for="author">By Author</label>  
+                </div>
+                
+                <div class="input-field col l4 m4 s5">
+                    <input type="checkbox" id="key" ng-model="byKeyWords"/>
+                    <label for="key">By Keywords</label>     
+                </div>
+                    
+            </div>
+       </form>
+            
+   </div>
+   
+   <div class="row">
+       <div class="col l6 offset-l3 s12">
+       <p class="error" ng-show="!byName && !byAuthor && !byKeyWords"><i class="material-icons">error</i>   Please Select atleast one Search Criteria</p>
+       
+       </div>
+   </div> 
+       
+   
+    <div class="row">
+         <div class="col l4 s12 m6" ng-repeat="doc in documents | orderBy:sort">
+            <div class="card hoverable" style="height:420px">
+                <div class="card-image">
+                    <img src="{{doc.docPhotoURL}}" style="height:200px">
+                    
+                </div>
+                <div class="card-content">
+                   <h5 class="author">{{doc.docName}}</h5> 
+                   <p class="author">Author: {{doc.docAuthor}}</p>
+                   <div>
+                   <p> <a ng-click="incLike(doc._id)"><i class="material-icons">thumb_up</i></a> {{doc.docLikes}}</p>
+                   </div>
+                   <div>
+                   <p> <a href="{{doc.docPath}}" ng-click="incDownload(doc._id)" download><i class="material-icons">archive</i></a> {{doc.docDownloads}}</p>
+                   </div>
+                </div>
+                
+            </div>
+         </div>   
+    </div>
+   
+    
+    
+</div>	
+
+<script>
+    $('select').material_select();
+    
+    $("#search").keypress(function(e) {
+    if(e.which == 13) {
+        if(angular.element("#homeCtrl").scope().byAuthor
+            ||angular.element("#homeCtrl").scope().byName
+            ||angular.element("#homeCtrl").scope().byKeyWords)
+            {
+                $("#search").val("");
+                angular.element("#homeCtrl").scope().search();
+                $("#mainbar").removeClass("beforeanim");
+                $("#mainbar").addClass("animation");
+            }
+                else
+                Materialize.toast('Please select atleast one criteria',4000);
+                
+    }
+});
+
+
+    
+    
+</script>
+
+	</body>
+</html>
+<!--
+
+
+
+
+
+
+
+
+-->

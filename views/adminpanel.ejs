@@ -1,0 +1,203 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<link type="text/css" rel="stylesheet" href="/public/stylesheets/materialize.min.css"  media="screen,projection"/>
+		<script src="/public/javascripts/jquery.js"></script>
+        <script src="/public/javascripts/angular.js"></script>
+        
+        <script src="/public/javascripts/materialize.js"></script>
+        <link href="/public/iconfont/material-icons.css" rel="stylesheet">
+        <script src="../public/javascripts/app.js"></script> 
+        
+	</head>
+    
+    <body ng-app="searchApp" ng-controller="adminCtrl">
+        
+        <style>
+            .main{
+			padding-top:30px;
+			width:42%;
+			margin-top:200px;
+		}
+         .card-content i{
+                position: absolute;
+                right: 30px;
+                bottom: 100px;
+            }
+            .card-content a{
+                cursor: pointer;
+            }
+            .card-action{
+                
+                cursor: pointer;
+            }
+           
+        
+            
+        </style>
+        
+        <div class="navbar-fixed">
+		<nav>
+			<div class="nav-wrapper z-depth-2 red lighten-2">
+				<div class="container">
+					<div class="col s12 m12 l12 navi">
+						<a href="/" class="brand-logo center">Abra Ka Dabra</a>
+						
+					</div>
+				</div>
+			</div>
+		</nav>
+	    </div>
+
+        
+      
+      <div ng-show="!isAuth()" class="row z-depth-1 main">
+          
+			<h3 class="center">Sign In</h3>
+  
+            <div class="row">
+                <div class="input-field col l12">
+                   
+                    <input type="text" id="username" ng-model="username" required>
+                    <label for="username">Username</label>
+      	        </div>
+            </div>
+            <div class="row">
+                <div class="input-field col l12">
+               
+                    <input id="pass" type="password" ng-model="password" required>
+                    <label for="pass">Password</label>
+                </div>
+            </div>
+            <div class="row center">
+            <div class="input-field col l12">
+                <button class="btn red lighten-2" ng-click="login()">Submit</button>
+                </div>
+            </div>
+    
+        </div>  
+       
+       <!--  Show this when authenticated .................... -->
+       <a href="/admin" style="position:fixed;bottom:50px;right:50px;" ng-show="isAuth()" ng-click="logout()"
+    class="btn-floating btn-large waves-effect waves-light red tooltipped" 
+    data-tooltip="Logout" data-position="top" data-delay="10"><i class="material-icons">input</i></a>
+    
+    <div class="row" ng-show="isAuth()">
+        
+        <div class="col l4">
+            <div class="row" style="margin-top:40px">
+      				<div class="input-field col l10 offset-l1">
+      					
+      					<input id="search" type="text" ng-model="search">
+      					<label for="search">Filter Documents</label>
+      				</div>
+    	    </div>
+            <div class="row" style="margin-top:40px;overflow-y:scroll;height:100vh">
+                <div class="col l8 offset-l2" ng-repeat="doc in documents | filter:search">
+                    <div class="card hoverable" style="height:400px">
+                        <div class="card-image">
+                            <img src="{{doc.docPhotoURL}}" style="height:200px">
+                            <span class="card-title">{{doc.docName}}</span>
+                        </div>
+                        <div class="card-content">
+                        <p class="author">Author: {{doc.docAuthor}}</p>
+                        <p>Likes: {{doc.docLikes}}</p>
+                        <p>Downloads: {{doc.docDownloads}}</p>
+                        
+                        </div>
+                        <div class="card-action">
+                            <a ng-click="delete(doc._id)"><i class="material-icons">delete</i></a>
+                            <a ng-click="loadDoc(doc._id)"><i class="material-icons right">mode_edit</i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col l8">
+            <div class="col l8 offset-l2">
+                <div class="row center-align" style="margin-top:60px">
+                    <h3 ng-show="!isUpdate" class="red-text text-darken-2">Add a Document</h3>
+                     <h3 ng-show="isUpdate" class="red-text text-darken-2">Update a Document</h3>
+                </div>
+                
+                <div class="row" style="margin-top:40px">
+      				<div class="input-field col l12">
+      					
+      					<input id="docName" type="text" ng-model="docName" required>
+      					<label for="docName">Document Name</label>
+      				</div>
+    			</div>
+               	
+               	<div class="row">
+      				<div class="input-field col l12">
+      					
+      					<input id="docAuthor" type="text" ng-model="docAuthor" required>
+      					<label for="docAuthor">Document Author</label>
+      				</div>
+    			</div>
+
+    			<div class="row">
+      				<div class="input-field col l12">
+      					
+      					<input id="docKeyWords" type="text" ng-model="docKeyWords" required>
+      					<label for="docKeyWords">Document Keywords</label>
+      				</div>
+    			</div>
+
+				<div class="row">
+				    <div class="file-field input-field col l12">
+				      <input class="file-path validate" type="text" id="imagename"/>
+				      <div class="btn">
+				        <span>Document Image</span>
+				        <input type="file" name="docuImg" id="docuImg" required accept="image/*">
+				      </div>
+				    </div>
+				</div> 
+
+				<div class="row">
+				    <div class="file-field input-field col l12">
+				      <input class="file-path validate" type="text" id="filename"/>
+				      <div class="btn">
+				        <span>Document</span>
+				        <input type="file" name="docu" id="docu" required>
+				      </div>
+				    </div>
+				</div> 
+
+                <div class="row center" ng-show="!isUpdate">
+      				<div class="input-field col l12">
+      					<button type="submit" ng-click="uploadDoc()" class="btn">Upload</button>
+      				</div>
+                    
+    			</div>
+                 <div class="row center" ng-show="isUpdate" style="margin-top:30px;">
+      				<div class="input-field col l6">
+      					<button ng-click="updateDoc()" class="btn">Update</button>
+      				</div>
+                    <div class="input-field col l6">
+      					<button ng-click="cancel()" class="btn">Cancel</button>
+      				</div>
+                      
+                    
+    			</div>
+                
+        
+            </div>
+        
+        
+        </div>
+    </div>
+            
+         
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </body>
+</html>
